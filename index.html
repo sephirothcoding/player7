@@ -6,24 +6,25 @@
 <title>Player Radio</title>
 <style>
   body {
-    background-image: url('background-image.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
   }
 
   #radio-player {
     width: 500px;
     height: 500px;
     padding: 20px;
-    background-color: rgba(240, 240, 240, 0.8);
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     text-align: center;
-    overflow: hidden; /* Evită scrollerul să iasă din container */
+    overflow: hidden;
+    position: relative;
   }
 
   #scroller {
@@ -36,6 +37,30 @@
   @keyframes marquee {
     0% { transform: translateX(100%); }
     100% { transform: translateX(-100%); }
+  }
+
+  audio {
+    width: 80%;
+    margin-top: 20px;
+  }
+
+  button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+
+  button:hover {
+    background-color: #45a049;
   }
 </style>
 </head>

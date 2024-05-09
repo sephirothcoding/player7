@@ -6,20 +6,20 @@
 <title>Player Radio</title>
 <style>
   body {
+    font-family: Arial, sans-serif;
     margin: 0;
-    overflow: hidden;
-  }
-
-  iframe {
-    width: 100%;
-    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden; /* Ascunde overflow-ul pentru a preveni scrollbar-uri */
   }
 
   #radio-player {
     width: 500px;
     height: 500px;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.5); /* Opacitatea fundalului */
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -28,7 +28,7 @@
     background-image: url('https://xatimg.com/image/aGugJYJpnuLr.jpg');
     background-size: cover;
     background-position: center;
-    cursor: pointer;
+    cursor: pointer; /* Transformă cursorul în pointer pentru a indica faptul că containerul este clicabil */
   }
 
   #scroller {
@@ -56,7 +56,7 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1;
+    z-index: 1; /* Asigură că butoanele sociale sunt deasupra efectului de cioburi */
   }
 
   .social-buttons a {
@@ -64,7 +64,7 @@
     width: 50px;
     height: 50px;
     background-color: transparent;
-    border-radius: 50%;
+    border-radius: 50%; /* Buton în formă de cerc */
     overflow: hidden;
     transition: transform 0.3s ease-in-out;
     position: relative;
@@ -84,12 +84,12 @@
   /* Clasa pentru cioburile de sticlă */
   .glass-shard {
     position: absolute;
-    background-image: url('https://image.freepik.com/free-photo/broken-glass-texture-background_74190-3873.jpg');
+    background-image: url('https://image.freepik.com/free-photo/broken-glass-texture-background_74190-3873.jpg'); /* Imagine cu cioburi de sticlă spartă */
     background-size: cover;
     width: 50px;
     height: 50px;
-    z-index: 2;
-    transition: transform 0.5s ease-in-out;
+    z-index: 2; /* Asigură că cioburile sunt deasupra imaginii de fundal */
+    transition: transform 0.5s ease-in-out; /* Efect de tranziție pentru cioburi */
   }
 </style>
 </head>
@@ -132,7 +132,7 @@
     var container = document.getElementById('radio-player');
     var width = container.offsetWidth;
     var height = container.offsetHeight;
-    var numShards = 20;
+    var numShards = 20; // Numărul de cioburi
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < numShards; i++) {
@@ -140,23 +140,25 @@
       shard.classList.add('glass-shard');
       shard.style.left = Math.random() * width + 'px';
       shard.style.top = Math.random() * height + 'px';
-      shard.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+      shard.style.transform = 'rotate(' + Math.random() * 360 + 'deg)'; // Rotește ciobul la un unghi aleatoriu
       fragment.appendChild(shard);
     }
 
     container.appendChild(fragment);
 
     setTimeout(function() {
+      // După un anumit timp, elimină cioburile
       var shards = document.querySelectorAll('.glass-shard');
       shards.forEach(function(shard) {
-        shard.style.transform = 'scale(0)';
+        shard.style.transform = 'scale(0)'; // Reduce dimensiunea ciobului la zero pentru a părea că dispare
       });
       setTimeout(function() {
+        // După ce tranzitia s-a terminat, elimina cioburile din container
         shards.forEach(function(shard) {
           shard.remove();
         });
-      }, 500);
-    }, 1000);
+      }, 500); // Așteaptă 0.5 secunde, timpul egal cu durata tranzitiei
+    }, 1000); // Așteaptă 1 secundă înainte de a începe tranzitia
   }
 </script>
 </body>

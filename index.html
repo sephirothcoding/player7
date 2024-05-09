@@ -47,12 +47,12 @@
 
   .social-buttons {
     display: flex;
-    justify-content: center;
-    gap: 10px;
+    flex-direction: column;
+    align-items: flex-start;
     position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
     z-index: 1;
   }
 
@@ -62,6 +62,7 @@
     height: 50px;
     border-radius: 50%;
     overflow: hidden;
+    margin-bottom: 10px;
     transition: transform 0.3s ease-in-out;
     position: relative;
     animation: pulse 1s infinite alternate;
@@ -107,22 +108,6 @@
     background-color: rgba(0, 0, 0, 0.5);
   }
 
-  #facebook-like {
-    background-color: transparent;
-    border: 2px solid #00ffa8;
-    border-radius: 5px;
-    color: #00ffa8;
-    font-weight: bold;
-    margin-top: 20px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out;
-  }
-
-  #facebook-like:hover {
-    transform: scale(1.1);
-  }
-
 </style>
 </head>
 <body>
@@ -140,11 +125,11 @@
     Your browser does not support the audio element.
   </audio>
   <div class="social-buttons">
-    <a href="#"><img src="https://xatimg.com/image/T9KAqZ0eYvQF.png" alt="Facebook"></a>
-    <a href="#"><img src="https://xatimg.com/image/Wd2VAcFmONKo.png" alt="Twitter"></a>
-    <!-- Adaugă alte butoane sociale aici -->
+    <a href="https://www.facebook.com/" target="_blank"><img src="https://xatimg.com/image/T9KAqZ0eYvQF.png" alt="Facebook"></a>
+    <a href="https://www.instagram.com/" target="_blank"><img src="https://xatimg.com/image/Wd2VAcFmONKo.png" alt="Instagram"></a>
+    <a href="https://www.tiktok.com/" target="_blank"><img src="https://example.com/tiktok.png" alt="TikTok"></a>
+    <a href="https://www.discord.com/" target="_blank"><img src="https://example.com/discord.png" alt="Discord"></a>
   </div>
-  <button id="facebook-like" onclick="likeOnFacebook()">Like on Facebook</button>
 </div>
 
 <script>
@@ -175,12 +160,6 @@
     // Simulăm un număr aleatoriu de ascultători activi pentru scopuri de demonstrație
     var numListeners = Math.floor(Math.random() * 1000) + 1;
     activeListeners.textContent = numListeners;
-  }
-
-  function likeOnFacebook() {
-    // Funcția pentru acțiunea de like pe Facebook
-    // Poți adăuga aici codul pentru a da like pe Facebook
-    alert("Liked on Facebook!");
   }
 
   setInterval(updateDateTime, 1000);

@@ -55,7 +55,7 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1; /* Asigură că butoanele sociale sunt deasupra efectului de undă */
+    z-index: 1; /* Asigură că butoanele sociale sunt deasupra efectului de cioburi */
   }
 
   .social-buttons a {
@@ -80,32 +80,37 @@
     transform: scale(1.1);
   }
 
-  /* Animatie de apa */
+  /* Animatie de cioburi sparte de sticla */
   #radio-player::before {
     content: "";
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.3) 100%);
-    animation: ripple 3s ease-in-out infinite;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://image.freepik.com/free-photo/broken-glass-surface-texture-background_114579-5540.jpg'); /* Imagine cu cioburi de sticlă spartă */
+    background-size: cover;
+    animation: glassShatter 5s ease-in-out infinite; /* Animatie pentru cioburi sparte */
     pointer-events: none; /* Asigură că evenimentele mouse-ului nu sunt afectate de elementul de animație */
-    z-index: 0; /* Asigură că efectul de undă este sub conținutul principal */
+    z-index: 0; /* Asigură că efectul de cioburi este sub conținutul principal */
+    opacity: 0.5; /* Opacitatea cioburilor */
   }
 
-  @keyframes ripple {
+  @keyframes glassShatter {
     0% {
-      transform: scale(1);
-      opacity: 0.6;
+      transform: scale(1) rotate(0deg);
+    }
+    25% {
+      transform: scale(1.1) rotate(20deg);
     }
     50% {
-      transform: scale(1.5);
-      opacity: 0.3;
+      transform: scale(1) rotate(0deg);
+    }
+    75% {
+      transform: scale(1.1) rotate(-20deg);
     }
     100% {
-      transform: scale(2);
-      opacity: 0;
+      transform: scale(1) rotate(0deg);
     }
   }
 </style>

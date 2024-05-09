@@ -14,7 +14,7 @@
     height: 100vh;
     overflow: hidden;
     background-color: #f0f0f0;
-    color: blue;
+    color: #00ffa8;
     font-weight: bold;
   }
 
@@ -97,7 +97,7 @@
   }
 
   #info {
-    color: blue;
+    color: #00ffa8;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -109,8 +109,9 @@
 
   #voting button {
     background-color: transparent;
-    border: none;
-    color: blue;
+    border: 2px solid #00ffa8;
+    border-radius: 5px;
+    color: #00ffa8;
     font-weight: bold;
     margin: 5px;
     cursor: pointer;
@@ -130,8 +131,8 @@
     <p id="time">Time: 08:02 PM</p>
     <p id="listeners">Listeners: <span id="activeListeners">185</span></p>
     <div id="voting">
-      <button onclick="like()">Like</button>
-      <button onclick="dislike()">Dislike</button>
+      <button onclick="vote('like')" id="likeButton">Like</button>
+      <button onclick="vote('dislike')" id="dislikeButton">Dislike</button>
       <p id="likes">Likes: <span id="likeCount">0</span></p>
       <p id="dislikes">Dislikes: <span id="dislikeCount">0</span></p>
     </div>
@@ -155,6 +156,7 @@
   var activeListeners = document.getElementById('activeListeners');
   var likeCount = parseInt(localStorage.getItem('likeCount')) || 0;
   var dislikeCount = parseInt(localStorage.getItem('dislikeCount')) || 0;
+  var lastVoteTime = parseInt(localStorage.getItem('lastVoteTime')) || 0;
 
   document.getElementById('likeCount').textContent = likeCount;
   document.getElementById('dislikeCount').textContent = dislikeCount;
@@ -184,16 +186,24 @@
     activeListeners.textContent = numListeners;
   }
 
-  function like() {
-    likeCount++;
-    localStorage.setItem('likeCount', likeCount);
-    document.getElementById('likeCount').textContent = likeCount;
-  }
-
-  function dislike() {
-    dislikeCount++;
-    localStorage.setItem('dislikeCount', dislikeCount);
-    document.getElementById('dislikeCount').textContent = dislikeCount;
+  function vote(type) {
+    var currentTime = new Date().getTime();
+    if (currentTime - lastVoteTime >= 24 * 60 * 60 * 1000) {
+      if (type === 'like') {
+        likeCount++;
+        localStorage.setItem('likeCount', likeCount);
+        document.getElementById('likeCount').textContent = likeCount;
+      } else if (type === 'dislike') {
+        dislikeCount++;
+        localStorage.setItem('dislikeCount', dislikeCount);
+        document.getElementById('dislikeCount').textContent = dislikeCount;
+      }
+      localStorage.setItem('lastVoteTime', currentTime);
+      document.getElementById('likeButton').disabled = true;
+      document.getElementById('dislikeButton').disabled = true;
+    } else {
+      alert("You can only vote once every 24 hours.");
+    }
   }
 
   setInterval(updateDateTime, 1000);

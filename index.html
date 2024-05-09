@@ -93,10 +93,25 @@
     from { transform: translateY(-20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
   }
+
+  #info {
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
 </style>
 </head>
 <body>
 <div id="radio-player">
+  <div id="info">
+    <p id="date"></p>
+    <p id="time"></p>
+    <p id="listeners">Listeners: <span id="activeListeners">0</span></p>
+  </div>
   <div id="scroller">
     <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
   </div>
@@ -117,6 +132,7 @@
 
 <script>
   var audio = document.getElementById('radio-audio');
+  var activeListeners = document.getElementById('activeListeners');
 
   function increaseVolume() {
     if (audio.volume < 1.0) {
@@ -129,6 +145,29 @@
       audio.volume -= 0.1;
     }
   }
+
+  function updateDateTime() {
+    var now = new Date();
+    var date = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    var time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('date').textContent = "Date: " + date;
+    document.getElementById('time').textContent = "Time: " + time;
+  }
+
+  function updateListeners() {
+    // Simulăm un număr aleatoriu de ascultători activi pentru scopuri de demonstrație
+    var numListeners = Math.floor(Math.random() * 1000) + 1;
+    activeListeners.textContent = numListeners;
+  }
+
+  // Actualizează data și ora la fiecare secundă
+  setInterval(updateDateTime, 1000);
+
+  // Actualizează numărul de ascultători activi la fiecare 5 secunde
+  setInterval(updateListeners, 5000);
+
+  // Inițializează data și ora la încărcarea paginii
+  updateDateTime();
 </script>
 </body>
 </html>

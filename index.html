@@ -6,20 +6,21 @@
 <title>Player Radio</title>
 <style>
   body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     overflow: hidden; /* Ascunde overflow-ul pentru a preveni scrollbar-uri */
+    background-color: #f0f0f0;
   }
 
   #radio-player {
     width: 500px;
     height: 500px;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.5); /* Opacitatea fundalului */
+    background-color: rgba(255, 255, 255, 0.9); /* Opacitatea fundalului */
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -29,6 +30,12 @@
     background-size: cover;
     background-position: center;
     cursor: pointer; /* Transformă cursorul în pointer pentru a indica faptul că containerul este clicabil */
+    animation: fadeIn 1s ease-out; /* Animatie de fade-in */
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
   audio {
@@ -51,11 +58,17 @@
     display: inline-block;
     width: 50px;
     height: 50px;
-    background-color: transparent;
+    background-color: #00acee;
     border-radius: 50%; /* Buton în formă de cerc */
     overflow: hidden;
     transition: transform 0.3s ease-in-out;
     position: relative;
+    animation: pulse 1s infinite alternate; /* Animatie de pulsație */
+  }
+
+  @keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
   }
 
   .social-buttons a img {
@@ -67,6 +80,18 @@
 
   .social-buttons a:hover {
     transform: scale(1.1);
+  }
+
+  #scroller {
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    animation: slideIn 5s infinite alternate; /* Animatie de slide-in */
+  }
+
+  @keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
   }
 </style>
 </head>

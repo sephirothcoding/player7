@@ -80,21 +80,10 @@
   .social-buttons a:hover {
     transform: scale(1.1);
   }
-
-  /* Clasa pentru cioburile de sticlă */
-  .glass-shard {
-    position: absolute;
-    background-image: url('https://image.freepik.com/free-photo/broken-glass-texture-background_74190-3873.jpg'); /* Imagine cu cioburi de sticlă spartă */
-    background-size: cover;
-    width: 50px;
-    height: 50px;
-    z-index: 2; /* Asigură că cioburile sunt deasupra imaginii de fundal */
-    transition: transform 0.5s ease-in-out; /* Efect de tranziție pentru cioburi */
-  }
 </style>
 </head>
 <body>
-<div id="radio-player" onclick="shatterImage()">
+<div id="radio-player">
   <div id="scroller">
     <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
   </div>
@@ -126,39 +115,6 @@
     if (audio.volume > 0.0) {
       audio.volume -= 0.1;
     }
-  }
-
-  function shatterImage() {
-    var container = document.getElementById('radio-player');
-    var width = container.offsetWidth;
-    var height = container.offsetHeight;
-    var numShards = 20; // Numărul de cioburi
-    var fragment = document.createDocumentFragment();
-
-    for (var i = 0; i < numShards; i++) {
-      var shard = document.createElement('div');
-      shard.classList.add('glass-shard');
-      shard.style.left = Math.random() * width + 'px';
-      shard.style.top = Math.random() * height + 'px';
-      shard.style.transform = 'rotate(' + Math.random() * 360 + 'deg)'; // Rotește ciobul la un unghi aleatoriu
-      fragment.appendChild(shard);
-    }
-
-    container.appendChild(fragment);
-
-    setTimeout(function() {
-      // După un anumit timp, elimină cioburile
-      var shards = document.querySelectorAll('.glass-shard');
-      shards.forEach(function(shard) {
-        shard.style.transform = 'scale(0)'; // Reduce dimensiunea ciobului la zero pentru a părea că dispare
-      });
-      setTimeout(function() {
-        // După ce tranzitia s-a terminat, elimina cioburile din container
-        shards.forEach(function(shard) {
-          shard.remove();
-        });
-      }, 500); // Așteaptă 0.5 secunde, timpul egal cu durata tranzitiei
-    }, 1000); // Așteaptă 1 secundă înainte de a începe tranzitia
   }
 </script>
 </body>

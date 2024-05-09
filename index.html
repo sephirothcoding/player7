@@ -1,4 +1,6 @@
-<html lang="en" data-lt-installed="true"><head>
+<!DOCTYPE html>
+<html lang="en" data-lt-installed="true">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Player Radio</title>
@@ -10,25 +12,27 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    overflow: hidden; /* Ascunde overflow-ul pentru a preveni scrollbar-uri */
+    overflow: hidden;
     background-color: #f0f0f0;
+    color: blue;
+    font-weight: bold;
   }
 
   #radio-player {
     width: 500px;
     height: 500px;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.9); /* Opacitatea fundalului */
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     text-align: center;
     overflow: hidden;
     position: relative;
-    background-image: url('https://xatimg.com/image/GNcimE9EyxsO.png'); /* Imaginea de fundal actualizată */
+    background-image: url('https://xatimg.com/image/GNcimE9EyxsO.png');
     background-size: cover;
     background-position: center;
-    cursor: pointer; /* Transformă cursorul în pointer pentru a indica faptul că containerul este clicabil */
-    animation: fadeIn 1s ease-out; /* Animatie de fade-in */
+    cursor: pointer;
+    animation: fadeIn 1s ease-out;
   }
 
   @keyframes fadeIn {
@@ -49,7 +53,7 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1; /* Asigură că butoanele sociale sunt deasupra efectului de cioburi */
+    z-index: 1;
   }
 
   .social-buttons a {
@@ -57,11 +61,11 @@
     width: 50px;
     height: 50px;
     background-color: #00acee;
-    border-radius: 50%; /* Buton în formă de cerc */
+    border-radius: 50%;
     overflow: hidden;
     transition: transform 0.3s ease-in-out;
     position: relative;
-    animation: pulse 1s infinite alternate; /* Animatie de pulsație */
+    animation: pulse 1s infinite alternate;
   }
 
   @keyframes pulse {
@@ -84,7 +88,8 @@
     color: #333;
     font-size: 18px;
     font-weight: bold;
-    animation: slideIn 5s infinite alternate; /* Animatie de slide-in */
+    animation: slideIn 5s infinite alternate;
+    margin-top: 50px;
   }
 
   @keyframes slideIn {
@@ -93,10 +98,11 @@
   }
 
   #info {
-    color: #fff;
+    color: blue;
     position: absolute;
-    bottom: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.5);
@@ -109,6 +115,12 @@
     <p id="date">Date: Thursday, May 9, 2024</p>
     <p id="time">Time: 08:02 PM</p>
     <p id="listeners">Listeners: <span id="activeListeners">185</span></p>
+    <div id="voting">
+      <button onclick="like()">Like</button>
+      <button onclick="dislike()">Dislike</button>
+      <p id="likes">Likes: 0</p>
+      <p id="dislikes">Dislikes: 0</p>
+    </div>
   </div>
   <div id="scroller">
     <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
@@ -122,12 +134,13 @@
     <a href="#"><img src="https://xatimg.com/image/Wd2VAcFmONKo.png" alt="Twitter"></a>
     <!-- Adaugă alte butoane sociale aici -->
   </div>
-  
-<div id="extwaiokist" style="display:none" v="fljme" q="5c78d3e8" c="641.3" i="647" u="27.24" s="04272401" sg="svr_09102316-ga_04272401-bai_05072421" d="0" w="false" e="" a="2" m="BMe="><div id="extwaigglbit" style="display:none" v="fljme" q="5c78d3e8" c="641.3" i="647" u="27.24" s="04272401" sg="svr_09102316-ga_04272401-bai_05072421" d="0" w="false" e="" a="2" m="BMe="></div></div></div>
+</div>
 
 <script>
   var audio = document.getElementById('radio-audio');
   var activeListeners = document.getElementById('activeListeners');
+  var likesCounter = 0;
+  var dislikesCounter = 0;
 
   function increaseVolume() {
     if (audio.volume < 1.0) {
@@ -150,20 +163,24 @@
   }
 
   function updateListeners() {
-    // Simulăm un număr aleatoriu de ascultători activi pentru scopuri de demonstrație
     var numListeners = Math.floor(Math.random() * 1000) + 1;
     activeListeners.textContent = numListeners;
   }
 
-  // Actualizează data și ora la fiecare secundă
+  function like() {
+    likesCounter++;
+    document.getElementById('likes').textContent = "Likes: " + likesCounter;
+  }
+
+  function dislike() {
+    dislikesCounter++;
+    document.getElementById('dislikes').textContent = "Dislikes: " + dislikesCounter;
+  }
+
   setInterval(updateDateTime, 1000);
-
-  // Actualizează numărul de ascultători activi la fiecare 5 secunde
   setInterval(updateListeners, 5000);
-
-  // Inițializează data și ora la încărcarea paginii
   updateDateTime();
 </script>
 
-
-</body></html>
+</body>
+</html>

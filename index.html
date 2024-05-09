@@ -80,6 +80,33 @@
   .social-buttons a:hover {
     transform: scale(1.1);
   }
+
+  /* Visualizer audio */
+  #visualizer {
+    width: 100%;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.5);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+  }
+
+  /* Feedback form */
+  #feedback-form {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 2;
+  }
+
+  /* Podcasts section */
+  #podcasts {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 2;
+  }
 </style>
 </head>
 <body>
@@ -100,10 +127,31 @@
     <button onclick="decreaseVolume()">-</button>
     <button onclick="increaseVolume()">+</button>
   </div>
+  <!-- Visualizer audio -->
+  <div id="visualizer"></div>
+  <!-- Feedback form -->
+  <div id="feedback-form">
+    <h2>Send Feedback</h2>
+    <form>
+      <textarea placeholder="Enter your feedback here..."></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <!-- Podcasts section -->
+  <div id="podcasts">
+    <h2>Podcasts & Archives</h2>
+    <ul>
+      <li><a href="#">Latest Podcast</a></li>
+      <li><a href="#">Archive 1</a></li>
+      <li><a href="#">Archive 2</a></li>
+      <!-- Adaugă mai multe linkuri către podcast-uri și arhive aici -->
+    </ul>
+  </div>
 </div>
 
 <script>
   var audio = document.getElementById('radio-audio');
+  var visualizer = document.getElementById('visualizer');
 
   function increaseVolume() {
     if (audio.volume < 1.0) {
@@ -116,6 +164,50 @@
       audio.volume -= 0.1;
     }
   }
+
+  // Visualizer audio
+  function visualize() {
+    var audioContext = new AudioContext();
+    var src = audioContext.createMediaElementSource(audio);
+    var analyser = audioContext.createAnalyser();
+
+    src.connect(analyser);
+    analyser.connect(audioContext.destination);
+
+    analyser.fftSize = 256;
+    var bufferLength = analyser.frequencyBinCount;
+    var dataArray = new Uint8Array(bufferLength);
+
+    var canvasCtx = visualizer.getContext('2d');
+
+    function draw() {
+      var WIDTH = visualizer.width;
+      var HEIGHT = visualizer.height;
+
+      analyser.getByteFrequencyData(dataArray);
+
+      canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
+
+      var barWidth = (WIDTH / bufferLength) * 2.5;
+      var barHeight;
+      var x = 0;
+
+      for (var i = 0; i < bufferLength; i++) {
+        barHeight = dataArray[i] / 2;
+
+        canvasCtx.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
+        canvasCtx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight);
+
+        x += barWidth + 1;
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  }
+
+  visualize();
 </script>
 </body>
 </html>

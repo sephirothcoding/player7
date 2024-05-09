@@ -60,7 +60,6 @@
     display: inline-block;
     width: 50px;
     height: 50px;
-    background-color: #00acee;
     border-radius: 50%;
     overflow: hidden;
     transition: transform 0.3s ease-in-out;
@@ -107,6 +106,21 @@
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.5);
   }
+
+  #voting button {
+    background-color: transparent;
+    border: none;
+    color: blue;
+    font-weight: bold;
+    margin: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  #voting button:hover {
+    transform: scale(1.1);
+  }
+
 </style>
 </head>
 <body>
@@ -118,8 +132,8 @@
     <div id="voting">
       <button onclick="like()">Like</button>
       <button onclick="dislike()">Dislike</button>
-      <p id="likes">Likes: 0</p>
-      <p id="dislikes">Dislikes: 0</p>
+      <p id="likes">Likes: <span id="likeCount">0</span></p>
+      <p id="dislikes">Dislikes: <span id="dislikeCount">0</span></p>
     </div>
   </div>
   <div id="scroller">
@@ -139,8 +153,11 @@
 <script>
   var audio = document.getElementById('radio-audio');
   var activeListeners = document.getElementById('activeListeners');
-  var likesCounter = 0;
-  var dislikesCounter = 0;
+  var likeCount = parseInt(localStorage.getItem('likeCount')) || 0;
+  var dislikeCount = parseInt(localStorage.getItem('dislikeCount')) || 0;
+
+  document.getElementById('likeCount').textContent = likeCount;
+  document.getElementById('dislikeCount').textContent = dislikeCount;
 
   function increaseVolume() {
     if (audio.volume < 1.0) {
@@ -168,13 +185,15 @@
   }
 
   function like() {
-    likesCounter++;
-    document.getElementById('likes').textContent = "Likes: " + likesCounter;
+    likeCount++;
+    localStorage.setItem('likeCount', likeCount);
+    document.getElementById('likeCount').textContent = likeCount;
   }
 
   function dislike() {
-    dislikesCounter++;
-    document.getElementById('dislikes').textContent = "Dislikes: " + dislikesCounter;
+    dislikeCount++;
+    localStorage.setItem('dislikeCount', dislikeCount);
+    document.getElementById('dislikeCount').textContent = dislikeCount;
   }
 
   setInterval(updateDateTime, 1000);

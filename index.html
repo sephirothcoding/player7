@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,36 +82,20 @@
     transform: scale(1.1);
   }
 
-  /* Visualizer audio */
-  #visualizer {
-    width: 100%;
+  /* Clasa pentru cioburile de sticlă */
+  .glass-shard {
+    position: absolute;
+    background-image: url('https://image.freepik.com/free-photo/broken-glass-texture-background_74190-3873.jpg'); /* Imagine cu cioburi de sticlă spartă */
+    background-size: cover;
+    width: 50px;
     height: 50px;
-    background-color: rgba(255, 255, 255, 0.5);
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 2;
-  }
-
-  /* Feedback form */
-  #feedback-form {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 2;
-  }
-
-  /* Podcasts section */
-  #podcasts {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 2;
+    z-index: 2; /* Asigură că cioburile sunt deasupra imaginii de fundal */
+    transition: transform 0.5s ease-in-out; /* Efect de tranziție pentru cioburi */
   }
 </style>
 </head>
 <body>
-<div id="radio-player">
+<div id="radio-player" onclick="shatterImage()">
   <div id="scroller">
     <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
   </div>
@@ -127,31 +112,10 @@
     <button onclick="decreaseVolume()">-</button>
     <button onclick="increaseVolume()">+</button>
   </div>
-  <!-- Visualizer audio -->
-  <div id="visualizer"></div>
-  <!-- Feedback form -->
-  <div id="feedback-form">
-    <h2>Send Feedback</h2>
-    <form>
-      <textarea placeholder="Enter your feedback here..."></textarea>
-      <button type="submit">Submit</button>
-    </form>
-  </div>
-  <!-- Podcasts section -->
-  <div id="podcasts">
-    <h2>Podcasts & Archives</h2>
-    <ul>
-      <li><a href="#">Latest Podcast</a></li>
-      <li><a href="#">Archive 1</a></li>
-      <li><a href="#">Archive 2</a></li>
-      <!-- Adaugă mai multe linkuri către podcast-uri și arhive aici -->
-    </ul>
-  </div>
 </div>
 
 <script>
   var audio = document.getElementById('radio-audio');
-  var visualizer = document.getElementById('visualizer');
 
   function increaseVolume() {
     if (audio.volume < 1.0) {
@@ -165,49 +129,38 @@
     }
   }
 
-  // Visualizer audio
-  function visualize() {
-    var audioContext = new AudioContext();
-    var src = audioContext.createMediaElementSource(audio);
-    var analyser = audioContext.createAnalyser();
+  function shatterImage() {
+    var container = document.getElementById('radio-player');
+    var width = container.offsetWidth;
+    var height = container.offsetHeight;
+    var numShards = 20; // Numărul de cioburi
+    var fragment = document.createDocumentFragment();
 
-    src.connect(analyser);
-    analyser.connect(audioContext.destination);
-
-    analyser.fftSize = 256;
-    var bufferLength = analyser.frequencyBinCount;
-    var dataArray = new Uint8Array(bufferLength);
-
-    var canvasCtx = visualizer.getContext('2d');
-
-    function draw() {
-      var WIDTH = visualizer.width;
-      var HEIGHT = visualizer.height;
-
-      analyser.getByteFrequencyData(dataArray);
-
-      canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
-
-      var barWidth = (WIDTH / bufferLength) * 2.5;
-      var barHeight;
-      var x = 0;
-
-      for (var i = 0; i < bufferLength; i++) {
-        barHeight = dataArray[i] / 2;
-
-        canvasCtx.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
-        canvasCtx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight);
-
-        x += barWidth + 1;
-      }
-
-      requestAnimationFrame(draw);
+    for (var i = 0; i < numShards; i++) {
+      var shard = document.createElement('div');
+      shard.classList.add('glass-shard');
+      shard.style.left = Math.random() * width + 'px';
+      shard.style.top = Math.random() * height + 'px';
+      shard.style.transform = 'rotate(' + Math.random() * 360 + 'deg)'; // Rotește ciobul la un unghi aleatoriu
+      fragment.appendChild(shard);
     }
 
-    draw();
-  }
+    container.appendChild(fragment);
 
-  visualize();
+    setTimeout(function() {
+      // După un anumit timp, elimină cioburile
+      var shards = document.querySelectorAll('.glass-shard');
+      shards.forEach(function(shard) {
+        shard.style.transform = 'scale(0)'; // Reduce dimensiunea ciobului la zero pentru a părea că dispare
+      });
+      setTimeout(function() {
+        // După ce tranzitia s-a terminat, elimina cioburile din container
+        shards.forEach(function(shard) {
+          shard.remove();
+        });
+      }, 500); // Așteaptă 0.5 secunde, timpul egal cu durata tranzitiei
+    }, 1000); // Așteaptă 1 secundă înainte de a începe tranzitia
+  }
 </script>
 </body>
 </html>
